@@ -1,1 +1,69 @@
-https://gist.githubusercontent.com/naruto-creator/003bafcd33be3cf3489f24a7a1d61751/raw/index.html
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>出水量校正參數計算機</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #006699;
+    }
+    label, input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    input, button {
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    #result {
+      font-weight: bold;
+      color: #006600;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>出水量校正參數計算機</h1>
+  <label for="setFlow">設定出水量 (ml)</label>
+  <input type="number" id="setFlow" placeholder="請輸入設定出水量" inputmode="decimal">
+
+  <label for="actualFlow">實際出水量 (ml)</label>
+  <input type="number" id="actualFlow" placeholder="請輸入實際出水量" inputmode="decimal">
+
+  <button id="calculateBtn">計算</button>
+
+  <div id="result"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('calculateBtn').addEventListener('click', function () {
+        const set = parseFloat(document.getElementById('setFlow').value);
+        const actual = parseFloat(document.getElementById('actualFlow').value);
+        const resultDiv = document.getElementById('result');
+
+        if (isNaN(set) || isNaN(actual)) {
+          resultDiv.textContent = '請輸入有效數值。';
+          return;
+        }
+
+        if (set === 0) {
+          resultDiv.textContent = '設定出水量不能為 0。';
+          return;
+        }
+
+        const result = (set - actual) / (set / 1000);
+        resultDiv.textContent = '校正參數為：' + result.toFixed(2);
+      });
+    });
+  </script>
+</body>
+</html>
